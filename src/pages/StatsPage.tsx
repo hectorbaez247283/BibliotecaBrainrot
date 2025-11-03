@@ -1,8 +1,7 @@
-// src/pages/StatsPage.tsx
 import React, { useState, useEffect } from 'react';
-import { Stats } from '../types/api.types';
+import type { Stats } from '../types/api.types';
 import { API_BASE_URL } from '../App';
-import { Card, ListGroup, Spinner, Alert, Badge } from 'react-bootstrap';
+import { Card, ListGroup, Spinner, Alert, Badge } from 'react-bootstrap'; // <-- ¡ESTA ES LA LÍNEA QUE FALTABA!
 
 export const StatsPage: React.FC = () => {
   const [stats, setStats] = useState<Stats | null>(null);

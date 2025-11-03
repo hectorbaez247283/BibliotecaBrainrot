@@ -1,12 +1,11 @@
-// src/pages/HomePage.tsx
 import React, { useState, useEffect } from 'react';
-import { Character } from '../types/api.types';
+import type { Character } from '../types/api.types';
 import { API_BASE_URL } from '../App';
-
-import { Row, Col, Form, Alert, Spinner, Card, Button } from 'react-bootstrap';
+// Importamos los componentes de Bootstrap
+import { Row, Col, Form, Alert, Spinner, Card, Button } from 'react-bootstrap'; 
 import { Link } from 'react-router-dom';
 
-// Componente de Tarjeta
+//Componente de Tarjeta
 interface CharacterCardProps {
   character: Character;
 }
@@ -28,28 +27,29 @@ const CharacterCard: React.FC<CharacterCardProps> = ({ character }) => {
         <Card.Text className="text-muted small">
           {character.description}
         </Card.Text>
-        <Button 
-          as={Link} 
+        <Link 
           to={`/character/${character.id}`} 
-          variant="primary" 
-          className="w-100 mt-auto"
+          className="d-grid text-decoration-none mt-auto"
         >
-          Ver detalles
-        </Button>
+          <Button variant="primary">
+            Ver detalles
+          </Button>
+        </Link>
       </Card.Body>
     </Card>
   );
 };
 
 
-//Página Principal 
+// --- Página Principal ---
 export const HomePage: React.FC = () => {
-  
+  // Estados para guardar los datos, el buscador, la carga y errores
   const [characters, setCharacters] = useState<Character[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  // useEffect se ejecuta 1 vez al cargar la página para buscar los datos
   useEffect(() => {
     const fetchCharacters = async () => {
       try {
@@ -67,7 +67,7 @@ export const HomePage: React.FC = () => {
       }
     };
     fetchCharacters();
-  }, []); 
+  }, []);
 
   const filteredCharacters = characters.filter((character) =>
     character.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -102,6 +102,7 @@ export const HomePage: React.FC = () => {
       
       {/* 3. Lista de Personajes */}
       {!loading && !error && (
+        // 'g-4' es el espacio (gap) entre las tarjetas
         <Row xs={1} md={2} lg={3} className="g-4">
           {filteredCharacters.length > 0 ? (
             filteredCharacters.map((char) => (

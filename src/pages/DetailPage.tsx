@@ -1,9 +1,8 @@
-// src/pages/DetailPage.tsx
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Character } from '../types/api.types';
+import type { Character } from '../types/api.types';
 import { API_BASE_URL } from '../App';
-import { Row, Col, Image, Badge, Spinner, Alert, Button } from 'react-bootstrap';
+import { Row, Col, Image, Badge, Spinner, Alert, Button } from 'react-bootstrap'; // <-- ¡ESTA ES LA LÍNEA QUE FALTABA!
 
 export const DetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>(); 
@@ -18,7 +17,6 @@ export const DetailPage: React.FC = () => {
     const fetchCharacter = async () => {
       try {
         setLoading(true);
-        // Pedimos el personaje usando el 'id'
         const response = await fetch(`${API_BASE_URL}/characters/${id}`);
         if (!response.ok) throw new Error('No se pudo cargar el personaje');
         const data: Character = await response.json();
@@ -38,6 +36,7 @@ export const DetailPage: React.FC = () => {
     }
   };
 
+  // Mensajes de carga o error
   if (loading) return (
     <div className="text-center"><Spinner animation="border" /></div>
   );
@@ -46,24 +45,24 @@ export const DetailPage: React.FC = () => {
 
   return (
     <div className="bg-white p-4 p-md-5 rounded shadow-sm">
-      <Button as={Link} to="/" variant="outline-primary" className="mb-4">
-        &larr; Volver a Inicio
-      </Button>
+      <Link to="/">
+        <Button variant="outline-primary" className="mb-4">
+            &larr; Volver a Inicio
+        </Button>
+    </Link>
       
       <Row>
-        {/* Columna Izquierda: Imagen */}
         <Col md={6} className="mb-3 mb-md-0 text-center">
           <Image 
             src={character.image} 
             alt={character.name} 
-            fluid // Hace la imagen responsiva
+            fluid
             rounded 
             onError={handleImageError}
             style={{ maxHeight: '500px', objectFit: 'contain' }}
           />
         </Col>
 
-        {/* Columna Derecha: Información */}
         <Col md={6}>
           <h1 className="fw-bold">{character.name}</h1>
           <p className="lead text-muted">{character.description}</p>
