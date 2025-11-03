@@ -19,9 +19,6 @@ export const StatsPage: React.FC = () => {
         
         const respuesta: ApiResponse<Stats> = await response.json();
         setStats(respuesta.data); // Guardamos la data
-        
-        // Ya puedes borrar esta línea:
-        // console.log("DATOS DE STATS RECIBIDOS:", respuesta.data);
 
       } catch (err) {
         setError((err as Error).message);
