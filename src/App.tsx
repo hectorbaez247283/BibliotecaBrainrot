@@ -1,35 +1,46 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+// src/App.tsx
+import React from 'react';
+// Importamos los componentes de React Router para las rutas
+import { Routes, Route, Outlet, ScrollRestoration } from 'react-router-dom';
+import { Container } from 'react-bootstrap';
 
-function App() {
-  const [count, setCount] = useState(0)
+// Importamos nuestra Navbar (la acabamos de crear)
+import { AppNavbar } from './components/Navbar';
 
+// Importamos las páginas que VAMOS a crear
+// (No te preocupes si VS Code da error, en los siguientes pasos las creamos)
+import { HomePage } from './pages/HomePage';
+import { DetailPage } from './pages/DetailPage';
+import { StatsPage } from './pages/StatsPage';
+
+export const API_BASE_URL = 'https://tralalero-api.vercel.app/api';
+
+//Layout Principal
+const AppLayout: React.FC = () => {
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <div className="pt-5" style={{paddingTop: '56px'}}> 
+      <AppNavbar />
+      <Container className="py-4">
+        <Outlet />
+      </Container>
+      <ScrollRestoration />
+    </div>
+  );
+};
 
-export default App
+//Componente App
+const App: React.FC = () => {
+  return (
+    <Routes>
+      <Route path="/" element={<AppLayout />}>
+
+        <Route index={true} element={<HomePage />} />
+        <Route path="/stats" element={<StatsPage />} />
+        <Route path="/character/:id" element={<DetailPage />} />
+
+      </Route>
+    </Routes>
+  );
+};
+
+export default App;
