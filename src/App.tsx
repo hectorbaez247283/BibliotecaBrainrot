@@ -1,34 +1,45 @@
 // src/App.tsx
-import React from 'react';
-// Importamos los componentes de React Router para las rutas
-import { Routes, Route, Outlet, ScrollRestoration } from 'react-router-dom';
+import React, { useEffect } from 'react';
+// Importamos 'useLocation' para el scroll y lo demás para las rutas
+import { Routes, Route, Outlet, useLocation } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 
-// Importamos nuestra Navbar (la acabamos de crear)
+// Importamos nuestros componentes
 import { AppNavbar } from './components/Navbar';
-
-// Importamos las páginas que VAMOS a crear
-// (No te preocupes si VS Code da error, en los siguientes pasos las creamos)
 import { HomePage } from './pages/HomePage';
 import { DetailPage } from './pages/DetailPage';
 import { StatsPage } from './pages/StatsPage';
 
+// La URL base de la API
 export const API_BASE_URL = 'https://tralalero-api.vercel.app/api';
+
+//Componente para Arreglar el Scroll
+// Reemplazo al <ScrollRestoration> que daba me error
+const ScrollToTop: React.FC = () => {
+
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+};
 
 //Layout Principal
 const AppLayout: React.FC = () => {
   return (
-    <div className="pt-5" style={{paddingTop: '56px'}}> 
+    <div style={{ paddingTop: '70px' }}> 
       <AppNavbar />
       <Container className="py-4">
+        <ScrollToTop /> 
         <Outlet />
       </Container>
-      <ScrollRestoration />
     </div>
   );
 };
 
-//Componente App
+//Componente APP
 const App: React.FC = () => {
   return (
     <Routes>
