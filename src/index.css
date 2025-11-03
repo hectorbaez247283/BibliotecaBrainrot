@@ -1,0 +1,13 @@
+/* src/index.css */
+
+/* Como algo básico, un hover para las tarjetas de personajes*/
+
+.card-hover {
+  transition: all 0.2s ease-in-out;
+}
+
+.card-hover:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+  border-color: dodgerblue;
+}

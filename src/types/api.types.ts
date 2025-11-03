@@ -1,16 +1,23 @@
+// src/types/api.types.ts
+
 export interface Character {
-  id: string;
-  name: string;
-  description: string;
-  image: string;
-  origin: string;
-  popularity: 'Alta' | 'Media' | 'Baja';
-  tags: string[];
+  id: number;
+  nombre: string;
+  descripcion: string; 
+  origen: string; 
+  popularidad: string; 
+  imagen: string; 
   memes: string[];
 }
-
 export interface Stats {
-  totalCharacters: number;
-  mostPopular: Character;
-  seriesCount: { name: string; count: number }[];
+  totalPersonajes: number;
+  personajeMasPopular: Character; 
+  conteoSeries: { name: string; count: number }[];
+}
+
+export interface ApiResponse<T> {
+  success: boolean;
+  data: T;
+  total?: number;
+  message?: string;
 }
